@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.smushytaco.colored_lightning.mixins",
+  "compatibilityLevel": "JAVA_${java}",
+  "client": [
+    "LightningEntityRendererColor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": []
+}

@@ -1,0 +1,5 @@
+{
+  "text.config.colored_lightning.title": "Colored Lightning Configuration",
+  "text.config.colored_lightning.option.enableColoredLightning": "Enable Colored Lightning",
+  "text.config.colored_lightning.option.changeColorForEachSegment": "Change Color For Each Segment"
+}

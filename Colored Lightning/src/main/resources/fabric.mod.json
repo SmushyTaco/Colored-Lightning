@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "colored_lightning",
+  "version": "${version}",
+  "name": "Colored Lightning",
+  "description": "This mod makes lightning colorful instead of always white!",
+  "authors": [
+    "SmushyTaco (Author)",
+    "FrozenDragon (Idea)"
+  ],
+  "contact": {
+    "homepage": "https://www.smushytaco.com/",
+    "issues": "https://www.curseforge.com/minecraft/mc-mods/colored-lightning/issues/",
+    "sources": "https://github.com/SmushyTaco/Colored-Lightning/"
+  },
+  "license": "GNU Lesser General Public License version 3 (LGPLv3)",
+  "icon": "assets/colored_lightning/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "com.smushytaco.colored_lightning.ColoredLightning"
+      }
+    ]
+  },
+  "mixins": [
+    "colored_lightning.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabricloader}",
+    "fabric-api": ">=${fabric_api}",
+    "fabric-language-kotlin": ">=${fabric_language_kotlin}",
+    "minecraft": ">=${minecraft}",
+    "java": ">=${java}",
+    "owo": ">=${owo_version}"
+  }
+}

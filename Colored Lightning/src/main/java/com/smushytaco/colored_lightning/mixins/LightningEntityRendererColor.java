@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LightningBoltRenderer.class)
 public class LightningEntityRendererColor {
     @Inject(method = "lambda$submit$0", at = @At("HEAD"))
-    private static void hookRenderOne(LightningBoltRenderState lightningEntityRenderState, float[] fs, float f, float[] gs, float g, PoseStack.Pose entry, VertexConsumer vertexConsumer, CallbackInfo ci, @Share("random") LocalRef<RandomSource> randomLocalRef, @Share("currentRed") LocalFloatRef currentRedRef, @Share("currentGreen") LocalFloatRef currentGreenRef, @Share("currentBlue") LocalFloatRef currentBlueRef) {
-        randomLocalRef.set(RandomSource.create(lightningEntityRenderState.seed));
+    private static void hookRenderOne(LightningBoltRenderState state, float[] xOffs, float finalXOff, float[] zOffs, float finalZOff, PoseStack.Pose pose, VertexConsumer buffer, CallbackInfo ci, @Share("random") LocalRef<RandomSource> randomLocalRef, @Share("currentRed") LocalFloatRef currentRedRef, @Share("currentGreen") LocalFloatRef currentGreenRef, @Share("currentBlue") LocalFloatRef currentBlueRef) {
+        randomLocalRef.set(RandomSource.create(state.seed));
         currentRedRef.set(0.0F);
         currentGreenRef.set(0.0F);
         currentBlueRef.set(0.0F);
@@ -30,16 +30,16 @@ public class LightningEntityRendererColor {
         }
     }
     @WrapOperation(method = "lambda$submit$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LightningBoltRenderer;quad(Lorg/joml/Matrix4fc;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFIFFFFFFFZZZZ)V"))
-    private static void hookRenderTwo(Matrix4fc matrix, VertexConsumer buffer, float x1, float z1, int y, float x2, float z2, float red, float green, float blue, float offset2, float offset1, boolean shiftEast1, boolean shiftSouth1, boolean shiftEast2, boolean shiftSouth2, Operation<Void> original, @Share("random") LocalRef<RandomSource> randomLocalRef, @Share("currentRed") LocalFloatRef currentRedRef, @Share("currentGreen") LocalFloatRef currentGreenRef, @Share("currentBlue") LocalFloatRef currentBlueRef) {
+    private static void hookRenderTwo(Matrix4fc pose, VertexConsumer buffer, float xo0, float zo0, int h, float xo1, float zo1, float boltRed, float boltGreen, float boltBlue, float rr1, float rr2, boolean px1, boolean pz1, boolean px2, boolean pz2, Operation<Void> original, @Share("random") LocalRef<RandomSource> randomLocalRef, @Share("currentRed") LocalFloatRef currentRedRef, @Share("currentGreen") LocalFloatRef currentGreenRef, @Share("currentBlue") LocalFloatRef currentBlueRef) {
         if (!ColoredLightning.INSTANCE.getConfig().getEnableColoredLightning()) {
-            original.call(matrix, buffer, x1, z1, y, x2, z2, red, green, blue, offset2, offset1, shiftEast1, shiftSouth1, shiftEast2, shiftSouth2);
+            original.call(pose, buffer, xo0, zo0, h, xo1, zo1, boltRed, boltGreen, boltBlue, rr1, rr2, px1, pz1, px2, pz2);
             return;
         }
-        if (ColoredLightning.INSTANCE.getConfig().getChangeColorForEachSegment() && !shiftEast1 && !shiftSouth1 && shiftEast2 && !shiftSouth2) {
+        if (ColoredLightning.INSTANCE.getConfig().getChangeColorForEachSegment() && !px1 && !pz1 && px2 && !pz2) {
             currentRedRef.set(0.5F + randomLocalRef.get().nextFloat() * 0.5F);
             currentGreenRef.set(0.5F + randomLocalRef.get().nextFloat() * 0.5F);
             currentBlueRef.set(0.5F + randomLocalRef.get().nextFloat() * 0.5F);
         }
-        original.call(matrix, buffer, x1, z1, y, x2, z2, currentRedRef.get(), currentGreenRef.get(), currentBlueRef.get(), offset2, offset1, shiftEast1, shiftSouth1, shiftEast2, shiftSouth2);
+        original.call(pose, buffer, xo0, zo0, h, xo1, zo1, currentRedRef.get(), currentGreenRef.get(), currentBlueRef.get(), rr1, rr2, px1, pz1, px2, pz2);
     }
 }
